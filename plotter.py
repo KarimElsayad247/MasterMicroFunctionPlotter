@@ -2,7 +2,8 @@
 
 import sys
 
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QIntValidator, QRegExpValidator
 from PyQt5.QtWidgets import QDialog, QApplication, QPushButton, QVBoxLayout, QLineEdit, QFormLayout, QLabel
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -44,6 +45,7 @@ class Window(QDialog):
 
         # text boxes to enter function, min x, and max x
         self.functionLineEdit = QLineEdit(self)
+        self.functionLineEdit.setValidator(QRegExpValidator(QRegExp("[x+*-^\d]*")))
 
         self.minXLineEdit = QLineEdit(self)
         self.minXLineEdit.setValidator(QIntValidator())
@@ -146,7 +148,7 @@ if __name__ == '__main__':
     """)
 
     main = Window()
-    main.fillWithTestData()
+    # main.fillWithTestData()
     main.show()
 
     sys.exit(app.exec_())
