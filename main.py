@@ -12,6 +12,7 @@ class Window(QDialog):
     def __init__(self, parent=None):
         super(Window, self).__init__(parent)
 
+
         # a figure instance to plot on
         self.figure = plt.figure()
 
@@ -62,6 +63,13 @@ class Window(QDialog):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+
+    # Styles
+    app.setStyleSheet("""
+        QLabel, QLineEdit {
+            font-size: 10pt;
+        }
+    """)
 
     main = Window()
     main.show()
