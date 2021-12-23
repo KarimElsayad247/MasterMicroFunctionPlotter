@@ -1,7 +1,7 @@
 # Initial window made following https://stackoverflow.com/questions/12459811/how-to-embed-matplotlib-in-pyqt-for-dummies
 
 import sys
-from PyQt5.QtWidgets import QDialog, QApplication, QPushButton, QVBoxLayout, QLineEdit, QFormLayout
+from PyQt5.QtWidgets import QDialog, QApplication, QPushButton, QVBoxLayout, QLineEdit, QFormLayout, QLabel
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
@@ -34,7 +34,8 @@ class Window(QDialog):
         self.maxXLineEdit = QLineEdit(self)
 
         # Label to display messages and errors
-
+        self.errorsLabel = QLabel(self)
+        self.errorsLabel.setText("Messages and errors go here")
 
         # set the layout
         generalLayout = QVBoxLayout()
@@ -46,11 +47,12 @@ class Window(QDialog):
         formLayout.addRow("Function to Plot", self.functionLineEdit)
         formLayout.addRow("Maximum value of x", self.minXLineEdit)
         formLayout.addRow("Minimum value of x", self.maxXLineEdit)
+        generalLayout.addWidget(self.errorsLabel)
         self.setLayout(generalLayout)
 
     def plot(self):
 
-
+        self.errorsLabel.setText(self.functionLineEdit.text())
 
         data = [i**2 for i in range(100)]
 
