@@ -1,11 +1,12 @@
 # Initial window made following https://stackoverflow.com/questions/12459811/how-to-embed-matplotlib-in-pyqt-for-dummies
 
 import sys
-from PyQt5.QtWidgets import QDialog, QApplication, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QDialog, QApplication, QPushButton, QVBoxLayout, QLineEdit, QFormLayout
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
+
 
 class Window(QDialog):
     def __init__(self, parent=None):
@@ -26,12 +27,23 @@ class Window(QDialog):
         self.button = QPushButton('Plot')
         self.button.clicked.connect(self.plot)
 
+        # text boxes to enter function, min x, and max x
+
+        self.functionLineEdit = QLineEdit(self)
+        self.minXLineEdit = QLineEdit(self)
+        self.maxXLineEdit = QLineEdit(self)
+
         # set the layout
-        layout = QVBoxLayout()
-        layout.addWidget(self.toolbar)
-        layout.addWidget(self.canvas)
-        layout.addWidget(self.button)
-        self.setLayout(layout)
+        generalLayout = QVBoxLayout()
+        formLayout = QFormLayout()
+        generalLayout.addWidget(self.toolbar)
+        generalLayout.addWidget(self.canvas)
+        generalLayout.addLayout(formLayout)
+        formLayout.addWidget(self.button)
+        formLayout.addRow("Function to Plot", self.functionLineEdit)
+        formLayout.addRow("Maximum value of x", self.minXLineEdit)
+        formLayout.addRow("Minimum value of x", self.maxXLineEdit)
+        self.setLayout(generalLayout)
 
     def plot(self):
         data = [i**2 for i in range(100)]
