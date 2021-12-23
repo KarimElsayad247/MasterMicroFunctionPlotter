@@ -29,10 +29,12 @@ class Window(QDialog):
         self.button.clicked.connect(self.plot)
 
         # text boxes to enter function, min x, and max x
-
         self.functionLineEdit = QLineEdit(self)
         self.minXLineEdit = QLineEdit(self)
         self.maxXLineEdit = QLineEdit(self)
+
+        # Label to display messages and errors
+
 
         # set the layout
         generalLayout = QVBoxLayout()
@@ -47,6 +49,9 @@ class Window(QDialog):
         self.setLayout(generalLayout)
 
     def plot(self):
+
+
+
         data = [i**2 for i in range(100)]
 
         self.figure.clear()
