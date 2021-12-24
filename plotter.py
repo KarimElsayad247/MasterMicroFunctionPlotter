@@ -43,7 +43,8 @@ class Window(QDialog):
         self.button = QPushButton('Plot')
         self.button.clicked.connect(self.plot)
 
-        # text boxes to enter function, min x, and max x
+        # text boxes to enter function, min x, and max x. min and max x only take integers.
+        # function box only takes the charactes specified in the regular expression.
         self.functionLineEdit = QLineEdit(self)
         self.functionLineEdit.setValidator(QRegExpValidator(QRegExp("[ ()Eex+*-^\d]*")))
 
@@ -71,15 +72,17 @@ class Window(QDialog):
         self.setLayout(generalLayout)
 
     def showError(self, errorText):
+        """Shows error message in the errors label and colors the text in red"""
         self.errorsLabel.setStyleSheet("color: red")
         self.errorsLabel.setText(errorText)
 
     def showSuccess(self, sucessText):
+        """Shows success message in errors label and colors the text in green"""
         self.errorsLabel.setStyleSheet("color: green")
         self.errorsLabel.setText(sucessText)
 
     def plot(self):
-
+        """Validates input to text boxes, and plots the provided function if everything is valid."""
         functionTextContent = self.functionLineEdit.text().replace('e', 'E')
         minX = self.minXLineEdit.text()
         maxX = self.maxXLineEdit.text()
@@ -97,26 +100,29 @@ class Window(QDialog):
             self.showError("Must provide maximum value of x")
             return False
 
+        # An invalid expression raises and exception, reject any such input
         try:
             expression = parse_function(functionTextContent)
         except ValueError:
             self.showError("Invalid expression for function!")
             return False
 
+        # Make sure there is x in function expression, and no more
         x = sym.Symbol('x')
         if (len(expression.free_symbols) != 1) or (x not in expression.free_symbols):
-            self.showError("Expression must contain only one variable and it must be x")
+            self.showError("Expression must contain exactly one variable and it must be x")
             return False
 
+        # If everything is good and valid, generate the data we will plot.
+        # resolution is how many values of x at which to evaluate the function. The higher, the more accurate
+        # the plot, but it'll take more time to calculate.
         minX = int(minX)
         maxX = int(maxX)
-
-        print(expression, minX, maxX)
-
         resolution = 100
         xVals = np.linspace(minX, maxX, resolution)
         data = [expression.evalf(subs={x: i}) for i in xVals]
 
+        # Remove the existing figure
         self.figure.clear()
 
         # Create an axis
@@ -128,10 +134,12 @@ class Window(QDialog):
         # Refresh canvas
         self.canvas.draw()
 
+        # Show a message to let the user know everything went will
         self.showSuccess("Showing plot!")
 
-
     def fillWithTestData(self):
+        """To make testing easier, I would fill boxes with data to save time on entering
+            values everytime I run the app"""
         self.functionLineEdit.setText("x + 1")
         self.minXLineEdit.setText("1")
         self.maxXLineEdit.setText("4")
