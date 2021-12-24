@@ -103,7 +103,7 @@ class Window(QDialog):
         # An invalid expression raises and exception, reject any such input
         try:
             expression = parse_function(functionTextContent)
-        except ValueError:
+        except (ValueError, SyntaxError):
             self.showError("Invalid expression for function!")
             return False
 
@@ -140,7 +140,7 @@ class Window(QDialog):
     def fillWithTestData(self):
         """To make testing easier, I would fill boxes with data to save time on entering
             values everytime I run the app"""
-        self.functionLineEdit.setText("x + 1")
+        self.functionLineEdit.setText("x+--+-")
         self.minXLineEdit.setText("1")
         self.maxXLineEdit.setText("4")
 
