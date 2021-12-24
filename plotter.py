@@ -45,7 +45,7 @@ class Window(QDialog):
 
         # text boxes to enter function, min x, and max x
         self.functionLineEdit = QLineEdit(self)
-        self.functionLineEdit.setValidator(QRegExpValidator(QRegExp("[Eex+*-^\d]*")))
+        self.functionLineEdit.setValidator(QRegExpValidator(QRegExp("[ ()Eex+*-^\d]*")))
 
         self.minXLineEdit = QLineEdit(self)
         self.minXLineEdit.setValidator(QIntValidator())
