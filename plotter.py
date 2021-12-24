@@ -65,8 +65,8 @@ class Window(QDialog):
         generalLayout.addLayout(formLayout)
         formLayout.addWidget(self.button)
         formLayout.addRow("Function to Plot", self.functionLineEdit)
-        formLayout.addRow("Maximum value of x", self.minXLineEdit)
-        formLayout.addRow("Minimum value of x", self.maxXLineEdit)
+        formLayout.addRow("Minimum value of x", self.minXLineEdit)
+        formLayout.addRow("Maximum value of x", self.maxXLineEdit)
         generalLayout.addWidget(self.errorsLabel)
         self.setLayout(generalLayout)
 
