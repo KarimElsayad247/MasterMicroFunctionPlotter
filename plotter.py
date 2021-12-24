@@ -45,7 +45,7 @@ class Window(QDialog):
 
         # text boxes to enter function, min x, and max x
         self.functionLineEdit = QLineEdit(self)
-        self.functionLineEdit.setValidator(QRegExpValidator(QRegExp("[x+*-^\d]*")))
+        self.functionLineEdit.setValidator(QRegExpValidator(QRegExp("[Eex+*-^\d]*")))
 
         self.minXLineEdit = QLineEdit(self)
         self.minXLineEdit.setValidator(QIntValidator())
@@ -80,7 +80,7 @@ class Window(QDialog):
 
     def plot(self):
 
-        functionTextContent = self.functionLineEdit.text()
+        functionTextContent = self.functionLineEdit.text().replace('e', 'E')
         minX = self.minXLineEdit.text()
         maxX = self.maxXLineEdit.text()
 
