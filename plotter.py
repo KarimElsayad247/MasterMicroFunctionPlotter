@@ -113,11 +113,17 @@ class Window(QDialog):
             self.showError("Expression must contain exactly one variable and it must be x")
             return False
 
+        minX = int(minX)
+        maxX = int(maxX)
+
+        # Make sure range of x values is appropriate
+        if maxX <= minX:
+            self.showError("Min value must be smaller than max value!")
+            return False
+
         # If everything is good and valid, generate the data we will plot.
         # resolution is how many values of x at which to evaluate the function. The higher, the more accurate
         # the plot, but it'll take more time to calculate.
-        minX = int(minX)
-        maxX = int(maxX)
         resolution = 100
         xVals = np.linspace(minX, maxX, resolution)
         data = [expression.evalf(subs={x: i}) for i in xVals]
