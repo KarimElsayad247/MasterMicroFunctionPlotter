@@ -21,3 +21,6 @@ spaces, braces, and 'e'
 Enter the function in the function text box, and enter minimum and maximum values for x
 in their respective text boxes. App will show you errors if you miss any. App also shows errors
 if you enter invalid mathematical expressions. 
+
+### Examples of bad inputs
+![Screehot shwowing and invalid function expression, along with error message](./resources/invalid1.png )
